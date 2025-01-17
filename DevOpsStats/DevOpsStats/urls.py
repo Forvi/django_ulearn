@@ -25,4 +25,7 @@ urlpatterns = [
     path('home', MainPage.as_view()),
     path('lastvacancies', LastVacancies.as_view()),
     path('generalstats', GeneralStats.as_view()),
+    path('skills', Skills.as_view()),
+    path('geography', Geography.as_view()),
+    path('dynamic', Dynamic.as_view())
 ]

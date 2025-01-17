@@ -46,3 +46,41 @@ class LastVacancies(View):
         }
         return render(request, 'LastVacancies.html', context)
 
+
+class Skills(View):
+    def get(self, request):
+        vacancies = Profession.objects.all()
+        vacancies_top20 = check_vacancy_plot('top20.png', plot_top_vacancies_per_year, vacancies)
+        
+        context = {
+            'vacancies_top20': vacancies_top20,
+        }
+
+        return render(request, 'skills.html', context)
+    
+class Geography(View):
+    def get(self, request):
+        vacancies = Profession.objects.all()
+
+        vacancies_salary_by_city = check_vacancy_plot('salary_by_city.png', plot_salary_by_city, vacancies)
+        vacancies_by_city = check_vacancy_plot('vacancies_by_city.png', plot_vacancies_by_city, vacancies)
+
+        
+        context = {
+            'vacancies_by_year': vacancies_by_city,
+            'vacancies_salary_by_city': vacancies_salary_by_city,
+        }
+
+        return render(request, 'geography.html', context)
+
+
+class Dynamic(View):
+    def get(self, request):
+        vacancies = Profession.objects.all()
+        vacancies_by_city = check_vacancy_plot('vacancies_by_city.png', plot_vacancies_by_city, vacancies)
+       
+        context = {
+            'vacancies_by_year': vacancies_by_city,
+        }
+
+        return render(request, 'dynamic.html', context)
