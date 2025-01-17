@@ -17,37 +17,23 @@ class MainPage(View):
 class GeneralStats(View):
     def get(self, request):
         vacancies = Profession.objects.all()
-
         data = {
             'published_at': [vacancy.published_at for vacancy in vacancies],
         }
 
-        file_path_year = os.path.join(settings.STATICFILES_DIRS[0], 'img', 'vacancies_by_year.png')
-        if os.path.exists(file_path_year) is False:
-            vacancies_per_year = plot_vacancies_per_year(data)
-        else:
-            vacancies_per_year = 'img/vacancies_by_year.png'
-
-        file_path_top = os.path.join(settings.STATICFILES_DIRS[0], 'img', 'top20.png')
-        if os.path.exists(file_path_top) is False:
-            vacancies_top20 = plot_top_vacancies_per_year(vacancies)
-        else:
-            vacancies_top20 = 'img/top20.png'
-
-        vacancies_by_city = ''
-        file_path_top = os.path.join(settings.STATICFILES_DIRS[0], 'img', 'vacancies_by_city.png')
-        if os.path.exists(file_path_top) is False:
-            vacancies_by_city = plot_vacancies_by_city(vacancies)
-        else:
-            vacancies_by_city = 'img/vacancies_by_city.png'
-
+        vacancies_per_year = check_vacancy_plot('vacancies_by_year.png', plot_vacancies_per_year, data)
+        vacancies_top20 = check_vacancy_plot('top20.png', plot_top_vacancies_per_year, vacancies)
+        vacancies_by_city = check_vacancy_plot('vacancies_by_city.png', plot_vacancies_by_city, vacancies)
+        vacancies_salary_by_city = check_vacancy_plot('salary_by_city.png', plot_salary_by_city, vacancies)
 
         context = {
             'vacancies': vacancies,
             'plot_vacancies_per_year': vacancies_per_year,
             'vacancies_top20': vacancies_top20,
             'vacancies_by_year': vacancies_by_city,
+            'vacancies_salary_by_city': vacancies_salary_by_city,
         }
+
         return render(request, 'generalstats.html', context)
 
 
