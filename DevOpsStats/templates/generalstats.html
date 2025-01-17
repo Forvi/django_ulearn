@@ -4,19 +4,22 @@
 <div class="pages-title-centered-container">
     <div class="pages-title-container">
         <h1>Динамика количества вакансий по годам</h1>
-        <img  class="img_anal" src="{% static plot_vacancies_per_year %}" alt="График динамики вакансий">
+        <img  class="img_anal" src="{% static 'img/vacancies_by_year.png' %}" alt="График динамики вакансий">
+    </div>
+
+    <div class="pages-title-container">
+        <h1>Уровень зарплат по городам</h1>
+        <img class="img_anal" src="{% static 'img/salary_by_city.png' %}" alt="Доля вакансий по городам">
+    </div>
+
+    <div class="pages-title-container">
+        <h1>Доля вакансий по городам</h1>
+        <img class="img_anal" src="{% static 'img/vacancies_by_city.png' %}" alt="Доля вакансий по городам">
     </div>
 
     <div class="pages-title-container">
         <h1>ТОП-20 навыков по годам</h1>
-        <img class="img_anal" src="{% static vacancies_top20 %}" alt="ТОП-20 навыков по годам">
+        <img class="img_anal" src="{% static 'img/top20.png' %}" alt="ТОП-20 навыков по годам">
     </div>
-
-
-    <div class="pages-title-container">
-        <h1>Доля вакансий по городам</h1>
-        <img class="img_anal" src="{% static vacancies_by_city.png %}" alt="Доля вакансий по городам">
-    </div>
-
 </div>
 {% endblock %}

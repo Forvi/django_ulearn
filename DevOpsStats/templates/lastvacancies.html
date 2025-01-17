@@ -2,103 +2,7 @@
 {% load static %}
 {% block content %}
 
-<style>
-body {
-    font-family: "Golos Text", serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-}
-
-.job-listings-container {
-    max-width: 800px;
-    margin: auto;
-}
-
-.job-listing {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.job-details {
-    flex-grow: 1;
-}
-
-.job-title a {
-    font-size: 18px;
-    color: #0073e6;
-    text-decoration: none;
-}
-
-.job-title a:hover {
-    text-decoration: underline;
-}
-
-.job-company {
-    font-size: 14px;
-    color: #555;
-    margin: 5px 0;
-}
-
-.job-salary {
-    font-size: 16px;
-    color: #333;
-    margin: 10px 0;
-}
-
-.logo {
-    width: 100px;
-    height: auto;
-    margin-left: 15px;
-    border-radius: 12px;
-}
-
-.desc {
-    font-size: 14px;
-    color: #666;
-    margin-top: 10px;
-    line-height: 1.5;
-    max-height: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-}
-
-.job-city {
-    font-size: 14px;
-    color: #777;
-    margin: 5px 0;
-    font-style: italic;
-}
-
-.job-experience {
-    background-color: #F1F4F9;
-    border-radius: 5px;
-    padding: 8px 8px;
-    margin-top: 10px;
-    font-size: 14px;
-    color: #696E79;
-    display: inline-block;
-    max-width: 100%;
-    word-wrap: break-word;
-}
-
-.job-date {
-    font-size: 12px;
-    color: #999;
-    margin-top: 5px;
-}
-</style>
-
+<link rel="stylesheet" type="text/css" href="{% static 'css/last_vacancies.css' %}">
 <div class="job-listings-container">
     {% for i in items %}
         <div class="job-listing">
@@ -117,10 +21,10 @@ body {
                         {% if i.salary.from == 'Отсутствует' and i.salary.to == 'Отсутствует' %}
                             Уровень дохода не указан
                         {% else %}
-                            {% if i.salary.from != 'Отсутствует' %}
+                            {% if i.salary.from != None %}
                                 От {{ i.salary.from }}
                             {% endif %}
-                            {% if i.salary.to != 'Отсутствует' %}
+                            {% if i.salary.to != None %}
                                 До {{ i.salary.to }}
                             {% endif %}
                             {{ i.salary.currency }}
