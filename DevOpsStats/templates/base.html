@@ -16,7 +16,9 @@
 <body>
     <header>
         <div class="title">
-            <img src="{% static 'img/JO_logo.png' %}">
+            <a href="home">
+                <img src="{% static 'img/JO_logo.png' %}" alt="Логотип">
+            </a>            
         </div>
         <div class="burger" id="burger">
             <div></div>
@@ -28,9 +30,9 @@
     <nav id="menu">
         <a href="/home"><i class="fas fa-home"></i> Главная</a>
         <a href="/generalstats"><i class="fas fa-chart-line"></i> Общая статистика</a>
-        <a href="#"><i class="fas fa-search"></i> Востребованность</a>
-        <a href="#"><i class="fas fa-map-marker-alt"></i> География</a>
-        <a href="#"><i class="fas fa-cogs"></i> Навыки</a>
+        <a href="/dynamic"><i class="fas fa-search"></i> Востребованность</a>
+        <a href="/geography"><i class="fas fa-map-marker-alt"></i> География</a>
+        <a href="/skills"><i class="fas fa-cogs"></i> Навыки</a>
         <a href="/lastvacancies"><i class="fas fa-briefcase"></i> Последние вакансии</a>
     </nav>
 
