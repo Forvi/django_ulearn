@@ -1,12 +1,16 @@
 import os
+from django.utils import timezone
 
 from django.shortcuts import render
 from django.views import View
+
+from App.serializers import ProfessionSerializer
 
 from .models import Profession
 from .services.graphics import *
 from .services.hh_api import hh_api
 from DevOpsStats import settings
+from rest_framework import generics
 
 
 class MainPage(View):
@@ -84,3 +88,30 @@ class Dynamic(View):
         }
 
         return render(request, 'dynamic.html', context)
+    
+
+
+# _______________ CRUD METHODS _____________
+
+
+class GetProfessions(generics.ListAPIView):
+    queryset = Profession.objects.all()
+    serializer_class = ProfessionSerializer
+
+
+class GetProfessionById(generics.RetrieveAPIView):
+    queryset = Profession.objects.all()
+    serializer_class = ProfessionSerializer
+
+
+class DeleteProfessionById(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Profession.objects.all()
+    serializer_class = ProfessionSerializer
+
+
+class CreateProfession(generics.CreateAPIView):
+    queryset = Profession.objects.all()
+    serializer_class = ProfessionSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(published_at=timezone.now())
