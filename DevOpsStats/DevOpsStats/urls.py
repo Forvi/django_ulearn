@@ -29,8 +29,9 @@ urlpatterns = [
     path('skills', Skills.as_view()),
     path('geography', Geography.as_view()),
     path('dynamic', Dynamic.as_view()),
-    path('api/professions', GetProfessions.as_view()), # Get all professions 
-    path('api/professions/<int:pk>', GetProfessionById.as_view()), # Get profession by id 
-    path('api/deleteprofession/<int:pk>', DeleteProfessionById.as_view()), # Delete profession by id 
-    path('api/createprofession', CreateProfession.as_view()) # Create profession 
+    # path('api/professions/<int:pk>', GetProfessionById.as_view()), # Get profession by id 
+    # path('api/deleteprofession/<int:pk>', DeleteProfessionById.as_view()), # Delete profession by id 
+    # path('api/createprofession', CreateProfession.as_view()), # Create profession 
+    path('api/professions/', ProfessionAPIView.as_view(), name='profession-list'),
+    path('api/professions/<int:pk>/', ProfessionAPIView.as_view(), name='profession-detail'),
 ]
