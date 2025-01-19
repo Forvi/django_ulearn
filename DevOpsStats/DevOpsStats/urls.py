@@ -15,7 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path, re_path
+
 
 from App.views import *
 
@@ -25,7 +26,14 @@ urlpatterns = [
     path('home', MainPage.as_view()),
     path('lastvacancies', LastVacancies.as_view()),
     path('generalstats', GeneralStats.as_view()),
-    path('skills', Skills.as_view()),
+    path('skills/', Skills.as_view()),
     path('geography', Geography.as_view()),
-    path('dynamic', Dynamic.as_view())
+    path('dynamic', Dynamic.as_view()),
+    path('api/professions/', ProfessionAPIView.as_view(), name='profession-list'),
+    path('api/professions/<int:pk>/', ProfessionAPIView.as_view(), name='profession-detail'),
+    path('api/auth/', include('djoser.urls')),  
+    re_path(r'^api/auth/', include('djoser.urls.authtoken')), 
+    # path('api/auth/register/', RegisterView.as_view(), name='register'), 
+    # path('api/auth/login/', LoginView.as_view(), name='login'),
+    # path('api/get-skills-graphic/', GetSkillsGraphic.as_view(), name='get-skills-graphic')
 ]
