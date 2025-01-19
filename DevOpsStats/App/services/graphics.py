@@ -1,4 +1,5 @@
 import datetime
+import json
 import os
 from io import StringIO
 
@@ -32,6 +33,37 @@ def plot_vacancies_per_year(data):
     plt.close()
 
     return 'img/vacancies_by_year.png'
+
+
+import pandas as pd
+
+import pandas as pd
+import json
+import os
+from django.conf import settings
+
+def prepare_vacancies_data(data):
+    # Создание DataFrame из входных данных
+    df = pd.DataFrame(data)
+
+    # Преобразование столбца 'published_at' в формат даты
+    df['published_at'] = pd.to_datetime(df['published_at'])
+    df['year'] = df['published_at'].dt.year
+
+    # Подсчет количества вакансий по годам
+    vacancies_per_year = df['year'].value_counts().sort_index()
+
+    # Преобразование в словарь
+    vacancies_dict = vacancies_per_year.reset_index()
+    vacancies_dict.columns = ['year', 'count']  # Переименование столбцов для ясности
+    vacancies_list = vacancies_dict.to_dict(orient='records')
+
+    # Сохранение данных в JSON файл
+    json_file_path = os.path.join(settings.STATICFILES_DIRS[0], 'json', 'vacancies_data.json')
+    with open(json_file_path, 'w', encoding='utf-8') as f:
+        json.dump(vacancies_list, f)
+
+    return 'json/vacancies_data.json'
 
 
 def plot_top_vacancies_per_year(vacancies):
@@ -86,6 +118,26 @@ def plot_vacancies_by_city(vacancies):
     plt.close()
 
     return file_path
+
+def vacancies_by_city_table(vacancies):
+    cities = [vacancy.area_name for vacancy in vacancies]
+    city_counts = pd.Series(cities).value_counts()
+
+    top_cities = city_counts.head(10)
+    other_cities_count = city_counts.iloc[10:].sum()
+
+    other_series = pd.Series({"Другие": other_cities_count})
+    city_counts = pd.concat([top_cities, other_series])
+
+    total_vacancies = len(vacancies)
+    city_share = (city_counts / total_vacancies) * 100
+    city_share = city_share.sort_values(ascending=False)
+
+    # Шаг 2: Сохранение в JSON
+    json_file_path = os.path.join(settings.STATICFILES_DIRS[0], 'json', 'vacancies_by_city.json')
+    city_share_df = city_share.reset_index()
+    city_share_df.columns = ['Город', 'Доля вакансий (%)']
+    city_share_df.to_json(json_file_path, orient='records', force_ascii=False)
 
 
 def plot_salary_by_city(vacancies):

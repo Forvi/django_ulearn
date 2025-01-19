@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/tables.css' %}">
+
+
 <div class="pages-title-centered-container">
     <div class="pages-title-container">
         <h1>География</h1>
@@ -8,4 +11,38 @@
         <img class="img_anal" src="{% static 'img/vacancies_by_city.png' %}" alt="ТОП-20 навыков по годам">
     </div>
 </div>
+
+<table id="vacanciesTable">
+    <thead>
+        <tr>
+            <th>Город</th>
+            <th>Доля вакансий (%)</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script>
+    function vacancies_by_city() {
+        fetch('{% static "json/vacancies_by_city.json" %}')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('vacanciesTable').getElementsByTagName('tbody')[0];
+                data.forEach(item => {
+                    const row = tableBody.insertRow();
+                    const cellCity = row.insertCell(0);
+                    const cellShare = row.insertCell(1);
+                    cellCity.textContent = item.Город;
+                    cellShare.textContent = item['Доля вакансий (%)'];
+                });
+            })
+            .catch(error => console.error('Ошибка при загрузке данных:', error));
+        }
+
+    vacancies_by_city()
+</script>
+
+
+
 {% endblock %}

@@ -77,10 +77,13 @@ class Geography(View):
         vacancies_salary_by_city = check_vacancy_plot('salary_by_city.png', plot_salary_by_city, vacancies)
         vacancies_by_city = check_vacancy_plot('vacancies_by_city.png', plot_vacancies_by_city, vacancies)
 
+        table = vacancies_by_city_table(vacancies)
+
         
         context = {
             'vacancies_by_year': vacancies_by_city,
             'vacancies_salary_by_city': vacancies_salary_by_city,
+            'table': table,
         }
 
         return render(request, 'geography.html', context)
@@ -89,10 +92,17 @@ class Geography(View):
 class Dynamic(View):
     def get(self, request):
         vacancies = Profession.objects.all()
+        data = {
+            'published_at': [vacancy.published_at for vacancy in vacancies],
+        }
+
         vacancies_by_city = check_vacancy_plot('vacancies_by_city.png', plot_vacancies_by_city, vacancies)
+        table = prepare_vacancies_data(data)
+
        
         context = {
             'vacancies_by_year': vacancies_by_city,
+            'table': table
         }
 
         return render(request, 'dynamic.html', context)

@@ -1,0 +1,39 @@
+    /* Общие стили для таблицы */
+    table {
+        width: 100%;
+        border-collapse: collapse; 
+        margin: 20px 0; 
+        font-size: 1.1em; 
+        font-family: Arial, sans-serif; 
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+    }
+
+    /* Стили для заголовков таблицы */
+    th {
+        background-color: #0066ff; 
+        color: white; 
+        padding: 12px; 
+        text-align: left; 
+    }
+
+    /* Стили для ячеек таблицы */
+    td {
+        padding: 10px; 
+        border-bottom: 1px solid #ddd; 
+    }
+
+    /* Стили для четных строк */
+    tr:nth-child(even) {
+        background-color: #f2f2f2; 
+    }
+
+    /* Стили для строк при наведении */
+    tr:hover {
+        background-color: #f1f1f1; 
+    }
+
+    /* Стили для ячеек с количеством вакансий */
+    td:nth-child(2) {
+        font-weight: bold;
+        color: #333; 
+    }

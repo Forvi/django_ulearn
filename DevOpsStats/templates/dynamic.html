@@ -1,10 +1,47 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/tables.css' %}">
+
 <div class="pages-title-centered-container">
     <div class="pages-title-container">
-        <h1>География</h1>
+        <h1>Востребованность</h1>
         <img class="img_anal" src="{% static 'img/vacancies_by_year.png' %}" alt="ТОП-20 навыков по годам">
     </div>
 </div>
+
+<div class="container">
+    <h1 class="mt-5">Динамика количества вакансий по годам</h1>
+    <table class="table table-striped mt-3" id="vacanciesTable">
+        <thead>
+            <tr>
+                <th>Год</th>
+                <th>Количество вакансий</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- таблица -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function dynamic() {
+        fetch('{% static "json/vacancies_data.json" %}')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('vacanciesTable').getElementsByTagName('tbody')[0];
+
+                data.forEach(row => {
+                    const newRow = tableBody.insertRow();
+                    newRow.insertCell(0).textContent = row['year']; 
+                    newRow.insertCell(1).textContent = row['count']; 
+                });
+            })
+            .catch(error => console.error('Ошибка загрузки данных:', error));
+    }
+
+    dynamic()
+</script>
+
 {% endblock %}
